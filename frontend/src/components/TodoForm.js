@@ -5,10 +5,12 @@ const TodoForm = ({ onAdd, categories }) => {
     const [category, setCategory] = useState(categories[0]);
     const [dueDate, setDueDate] = useState('');
     const [reminder, setReminder] = useState('');
+    const [priority, setPriority] = useState('Medium'); // Default priority
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const newTodo = { title, category, dueDate, reminder };
+        const newTodo = { title, category, dueDate, reminder, priority  };
         onAdd(newTodo);
 
         // Handle reminder if set
@@ -21,6 +23,7 @@ const TodoForm = ({ onAdd, categories }) => {
         setCategory(categories[0]);
         setDueDate('');
         setReminder('');
+        setPriority('Medium');
     };
 
     const requestNotificationPermission = () => {
@@ -87,6 +90,11 @@ const TodoForm = ({ onAdd, categories }) => {
                 onChange={(e) => setReminder(e.target.value)}
                 placeholder="Reminder"
             />
+            <select value={priority} onChange={(e) => setPriority(e.target.value)}>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+            </select>
             <button type="submit">Add Todo</button>
         </form>
     );

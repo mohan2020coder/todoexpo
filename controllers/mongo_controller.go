@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -80,5 +81,29 @@ func (ctrl *MongoController) GetTodoByID(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Todo not found"})
 		return
 	}
+	c.JSON(http.StatusOK, todo)
+}
+func (controller *MongoController) UpdateTodoByID(c *gin.Context) {
+	id := c.Param("id")
+	var todo models.TodoMongo
+	if err := c.BindJSON(&todo); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	objID, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+
+	filter := bson.M{"_id": objID}
+	update := bson.M{"$set": todo}
+	_, err = controller.Collection.UpdateOne(context.Background(), filter, update)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
 	c.JSON(http.StatusOK, todo)
 }

@@ -13,7 +13,7 @@ const TodoItem = ({ todo, onUpdate, onDelete }) => {
     return (
         <div className={`todo-item ${todo.completed ? 'completed' : ''}`}>
             <div className="todo-item-content">
-                <h3>{todo.title} - {todo.category}</h3>
+                <h3>{todo.title} - {todo.priority}</h3>
                 {todo.dueDate && <p>Due: {new Date(todo.dueDate).toLocaleDateString()}</p>}
                 {todo.reminder && <p>Reminder: {new Date(todo.reminder).toLocaleString()}</p>}
             </div>
