@@ -1,6 +1,5 @@
 import React from 'react';
-import { FaCheck, FaTimes } from 'react-icons/fa'; // Import icons from react-icons
-import './TodoItem.css'; // Import the CSS file
+import { FaCheck, FaTimes, FaBell } from 'react-icons/fa';
 
 const TodoItem = ({ todo, onUpdate, onDelete }) => {
     const handleToggleComplete = () => {
@@ -14,7 +13,9 @@ const TodoItem = ({ todo, onUpdate, onDelete }) => {
     return (
         <div className={`todo-item ${todo.completed ? 'completed' : ''}`}>
             <div className="todo-item-content">
-                <h3>{todo.title}</h3>
+                <h3>{todo.title} - {todo.category}</h3>
+                {todo.dueDate && <p>Due: {new Date(todo.dueDate).toLocaleDateString()}</p>}
+                {todo.reminder && <p>Reminder: {new Date(todo.reminder).toLocaleString()}</p>}
             </div>
             <div className="todo-item-actions">
                 <button className="toggle-complete-btn" onClick={handleToggleComplete}>
@@ -23,6 +24,7 @@ const TodoItem = ({ todo, onUpdate, onDelete }) => {
                 <button className="delete-btn" onClick={handleDelete}>
                     <FaTimes />
                 </button>
+                {todo.reminder && <FaBell />}
             </div>
         </div>
     );

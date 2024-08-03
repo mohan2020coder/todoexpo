@@ -4,6 +4,7 @@ package controllers
 import (
 	"context"
 	"net/http"
+	"todoexpo/models"
 
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
@@ -15,7 +16,8 @@ type MongoController struct {
 }
 
 func (ctrl *MongoController) GetTodos(c *gin.Context) {
-	var todos []bson.M
+	// var todos []bson.M
+	var todos []models.TodoMongo
 	cursor, err := ctrl.Collection.Find(context.TODO(), bson.D{{}})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -29,7 +31,8 @@ func (ctrl *MongoController) GetTodos(c *gin.Context) {
 }
 
 func (ctrl *MongoController) CreateTodo(c *gin.Context) {
-	var todo bson.M
+	// var todo bson.M
+	var todo models.TodoMongo
 	if err := c.ShouldBindJSON(&todo); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -44,7 +47,8 @@ func (ctrl *MongoController) CreateTodo(c *gin.Context) {
 
 func (ctrl *MongoController) UpdateTodo(c *gin.Context) {
 	id := c.Param("id")
-	var todo bson.M
+	//var todo bson.M
+	var todo models.TodoMongo
 	if err := c.ShouldBindJSON(&todo); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -69,7 +73,8 @@ func (ctrl *MongoController) DeleteTodo(c *gin.Context) {
 
 func (ctrl *MongoController) GetTodoByID(c *gin.Context) {
 	id := c.Param("id")
-	var todo bson.M
+	//var todo bson.M
+	var todo models.TodoMongo
 	err := ctrl.Collection.FindOne(context.TODO(), bson.M{"_id": id}).Decode(&todo)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Todo not found"})
