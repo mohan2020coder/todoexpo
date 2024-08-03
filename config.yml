@@ -1,0 +1,7 @@
+database:
+  type: "sqlite" # Change to "sqlite" to use SQLite
+  mongodb:
+    uri: "mongodb://localhost:27017"
+    database: "todoapp"
+  sqlite:
+    path: "todoapp.db"

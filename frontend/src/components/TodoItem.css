@@ -1,0 +1,50 @@
+.todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    transition: background-color 0.3s ease;
+}
+
+.todo-item:hover {
+    background-color: #f9f9f9;
+}
+
+.todo-item.completed h3 {
+    text-decoration: line-through;
+    color: #777;
+}
+
+.todo-item-content {
+    flex-grow: 1;
+}
+
+.todo-item-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.todo-item-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.toggle-complete-btn {
+    color: #28a745; /* Green for complete */
+}
+
+.delete-btn {
+    color: #dc3545; /* Red for delete */
+}
+
+.toggle-complete-btn:hover {
+    color: #218838; /* Darker green on hover */
+}
+
+.delete-btn:hover {
+    color: #c82333; /* Darker red on hover */
+}
